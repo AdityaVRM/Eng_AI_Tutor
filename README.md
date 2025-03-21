@@ -137,13 +137,13 @@ The application can be configured through:
 
 ## 📚 References
 
-- UBC Chemical and Biological Engineering: [Project Funding Application](https://blogs.ubc.ca/abagherzadeh/summer-job-postings/2025-summer-job-posting/)
+- UBC Chemical and Biological Engineering
 - Literature on GenAI in Engineering Education
 - Critical Thinking Assessment Frameworks
 
 ## 👥 Contributors
 
-- [Your Name](https://github.com/yourusername)
+- [Aditya Varma](https://github.com/AdityaVRM)
 
 ## 📄 License
 
