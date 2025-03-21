@@ -18,11 +18,10 @@ logger = logging.getLogger("EngE-AI")
 # Load environment variables
 load_dotenv()
 
-
 class OllamaManager:
     """Manager for Ollama LLM interactions"""
 
-    def __init__(self, model_name="llama3"):
+    def __init__(self, model_name="llama3.2"):
         """
         Initialize the Ollama manager with the specified model.
 
@@ -129,6 +128,21 @@ class OllamaManager:
             logger.error(f"Error in chat: {str(e)}")
             return f"Error in chat: {str(e)}"
 
+    def list_available_models(self):
+        """List all available models"""
+        try:
+            models = ollama.list()
+            return [model.get('name') for model in models.get('models', [])]
+        except Exception as e:
+            logger.error(f"Error listing available models: {str(e)}")
+            return []
+
+    def set_model(self, model_name):
+        """Set the model to the specified model_name"""
+        self.model_name = model_name
+        self.is_available = self._check_model_availability()
+        if not self.is_available:
+            self._pull_model()
 
 if __name__ == "__main__":
     # Simple test of the OllamaManager

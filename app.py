@@ -75,12 +75,12 @@ def load_css():
         }
 
         .user-message {
-            background-color: #E0E7FF;
+            background-color: #4e76fc;
             margin-left: 2rem;
         }
 
         .ai-message {
-            background-color: #EFF6FF;
+            background-color: #3b8ef7;
             margin-right: 2rem;
         }
 
@@ -273,7 +273,7 @@ def main():
                 st.success(f"Settings updated! Now using {selected_model}")
 
         st.markdown("---")
-        st.markdown("© 2025 UBC Chemical and Biological Engineering")
+        st.markdown("© Made with ❤️ by Aditya Varma")
 
     # Main content area based on navigation
     if page == "Dashboard":
@@ -574,21 +574,21 @@ def display_virtual_tutor(tutor):
 
                 # Get response from tutor model
                 with st.spinner("EngE-AI is thinking..."):
-                    response = tutor.get_response(
+                    response = tutor.answer_question(
                         user_input,
-                        course=st.session_state.selected_course
+                        mode="general"  # Removed the 'course' parameter
                     )
 
                 # Add AI response to chat history
                 st.session_state.chat_history.append({"role": "assistant", "content": response})
 
                 # Rerun to refresh the chat display
-                st.experimental_rerun()
+                st.rerun()
 
     with col2:
         if st.button("Clear Chat", use_container_width=True):
             st.session_state.chat_history = []
-            st.experimental_rerun()
+            st.rerun()
 
     # Suggested questions
     st.markdown("<div style='margin-top: 20px;'>", unsafe_allow_html=True)
@@ -611,36 +611,36 @@ def display_virtual_tutor(tutor):
                 # Set as user input and trigger the same flow as pressing Send
                 st.session_state.chat_history.append({"role": "user", "content": q})
                 with st.spinner("EngE-AI is thinking..."):
-                    response = tutor.get_response(
+                    response = tutor.answer_question(
                         q,
-                        course=st.session_state.selected_course
+                        mode="general"  # Removed the 'course' parameter
                     )
                 st.session_state.chat_history.append({"role": "assistant", "content": response})
-                st.experimental_rerun()
+                st.rerun()
 
     with col2:
         for q in sample_questions[2:4]:
             if st.button(q, key=f"q_{sample_questions.index(q)}", use_container_width=True):
                 st.session_state.chat_history.append({"role": "user", "content": q})
                 with st.spinner("EngE-AI is thinking..."):
-                    response = tutor.get_response(
+                    response = tutor.answer_question(
                         q,
-                        course=st.session_state.selected_course
+                        mode="general"  # Removed the 'course' parameter
                     )
                 st.session_state.chat_history.append({"role": "assistant", "content": response})
-                st.experimental_rerun()
+                st.rerun()
 
     with col3:
         for q in sample_questions[4:]:
             if st.button(q, key=f"q_{sample_questions.index(q)}", use_container_width=True):
                 st.session_state.chat_history.append({"role": "user", "content": q})
                 with st.spinner("EngE-AI is thinking..."):
-                    response = tutor.get_response(
+                    response = tutor.answer_question(
                         q,
-                        course=st.session_state.selected_course
+                        mode="general"  # Removed the 'course' parameter
                     )
                 st.session_state.chat_history.append({"role": "assistant", "content": response})
-                st.experimental_rerun()
+                st.rerun()
 
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
@@ -1184,12 +1184,12 @@ def display_settings():
         col1, col2 = st.columns(2)
 
         with col1:
-            st.selectbox("Default AI Model", ["llama3.2","mistral-7b"], index=0)
+            st.selectbox("Default AI Model", ["llama3.2", "mistral"], index=0)
             st.slider("Temperature", min_value=0.1, max_value=1.0, value=0.7, step=0.1)
             st.slider("Max Tokens", min_value=256, max_value=4096, value=1024, step=256)
 
         with col2:
-            st.selectbox("Backup Model (Fallback)", ["llama2-7b", "phi-2", "gpt2"], index=1)
+            st.selectbox("Backup Model (Fallback)", ["llama3.2", "mistral"], index=1)
             st.number_input("Response Timeout (seconds)", min_value=10, max_value=120, value=30, step=5)
             st.selectbox("Model Hosting", ["Local (Ollama)", "API Service", "Hybrid"], index=0)
 

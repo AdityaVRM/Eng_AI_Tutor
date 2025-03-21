@@ -4,7 +4,7 @@ import json
 from typing import List, Dict, Any, Optional
 import pandas as pd
 from utils.prompt_templates import TutorPromptTemplates
-from utils.prompt_templates import ScenarioPromptTemplates
+from utils.critical_thinking import CriticalThinkingFramework
 
 logger = logging.getLogger("EngE-AI.tutor")
 
